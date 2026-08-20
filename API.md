@@ -25,3 +25,27 @@
 | **Геттеры** |||
 | `sf::Vector2f size()` | Возвращает размер кнопки. | `auto sz = btn.size();` |
 | `sf::Color color()` | Возвращает текущий цвет кнопки. | `sf::Color c = btn.color();` |
+
+## Полный список методов Label
+
+| Метод | Описание | Пример |
+| :--- | :--- | :--- |
+| **Конструкторы** |||
+| `Label(std::wstring str)` | Создаёт лейбл с указанным текстом. | `Label title(L"Заголовок");` |
+| `Label()` | Создаёт лейбл с текстом-заглушкой `SOME TEXT`. | `Label defaultLabel;` |
+| **Настройка текста** |||
+| `void text(std::wstring str)` | Устанавливает текст лейбла. | `label.text(L"Привет!");` |
+| `void text(sf::Color color)` | Устанавливает цвет текста. | `label.text(sf::Color::Red);` |
+| `void text(int size)` | Устанавливает размер шрифта (кегль). | `label.text(24);` |
+| `void text(sf::Text::Style& style)` | Устанавливает стиль текста (жирный, курсив и т.д.). | `label.text(sf::Text::Bold);` |
+| `void text(sf::Font& font)` | Устанавливает шрифт для текста. | `label.text(myFont);` |
+| **Настройка фона** |||
+| `void background(bool enable)` | Включает (`true`) или выключает (`false`) отображение фона. | `label.background(true);` |
+| `void background(sf::Color color)` | Устанавливает цвет фона. | `label.background(sf::Color::Blue);` |
+| `void background(float margin)` | Устанавливает одинаковые отступы (поля) вокруг текста. | `label.background(10);` |
+| `void background(float marginX, float marginY)` | Устанавливает отдельные отступы по горизонтали и вертикали. | `label.background(20, 5);` |
+| **Позиционирование** |||
+| `void position(float x, float y)` | Устанавливает позицию лейбла на экране (верхний левый угол текста). | `label.position(100, 200);` |
+| **Геттеры** |||
+| `std::optional<sf::Text>& text()` | Возвращает ссылку на объект `sf::Text` для прямого доступа (если он есть). | `auto& txt = label.text();` |
+| `sf::RectangleShape& shape()` | Возвращает ссылку на объект фона `sf::RectangleShape`. | `auto& bg = label.shape();` |
