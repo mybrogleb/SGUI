@@ -22,10 +22,10 @@
 Класс кнопки. Создаёт объект имеющий форму(круг или прямуогольник), способный
 проверять состояние и вызывать задекларированные функции callback 
 
-- push_mod(); <small>released и oneclick</small>
-- callback(); <small>подобно FLTK</small>
-- when_pushing(); <small>callback но постоянно вызывающийся</small>
-- hover_effects(); <small>отображения эффектов наводки</small>
+- push_mod(); *released и oneclick*
+- callback(); *подобно FLTK*
+- when_pushing(); *callback но постоянно вызывающийся*
+- hover_effects(); *отображения эффектов наводки*
 
 #### CALLBACK и WHEN_PUSH пояснение
 В кнопку с помощью `obj.callback()` можно передавать свою функцию.
