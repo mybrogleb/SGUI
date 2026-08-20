@@ -2,6 +2,14 @@
 
 | Метод | Описание | Пример |
 | :--- | :--- | :--- |
+| **Конструкторы** |||
+| `Button(shape_type type)` | Создаёт кнопку с указанной формой (`rectangle` или `circle`). Размер и позиция по умолчанию. | `Button btn(shape_type::rectangle);` |
+| `Button(shape_type type, std::wstring text)` | Создаёт кнопку с формой и текстом. | `Button btn(shape_type::circle, L"OK");` |
+| `Button(shape_type type, float x, float y)` | Создаёт кнопку с формой и позицией. | `Button btn(shape_type::rectangle, 100, 200);` |
+| `Button(shape_type type, std::wstring text, float x, float y)` | Создаёт кнопку с формой, текстом и позицией. | `Button btn(shape_type::circle, L"Start", 50, 50);` |
+| `Button(shape_type type, float x, float y, float width, float height)` | Создаёт кнопку с формой, позицией и размером. | `Button btn(shape_type::rectangle, 10, 10, 200, 50);` |
+| `Button(shape_type type, std::wstring text, float x, float y, float width, float height)` | Создаёт кнопку с формой, текстом, позицией и размером. | `Button btn(shape_type::rectangle, L"Click", 100, 100, 150, 40);` |
+| **Настройка вида** |||
 | `void size(float x, float y)` | Устанавливает размер (ширина, высота). Для круга `x` — диаметр. | `btn.size(100, 50);` |
 | `void size(float x)` | Устанавливает размер для круга (диаметр) или квадрата (сторона). | `btn.size(100);` |
 | `void position(float x, float y)` | Устанавливает позицию на экране. | `btn.position(200, 100);` |
