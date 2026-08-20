@@ -5,6 +5,10 @@
 | **Конструкторы** |||
 | `Button(shape_type type)` | Создаёт кнопку с указанной формой (`rectangle` или `circle`). Размер и позиция по умолчанию. | `Button btn(shape_type::rectangle);` |
 | `Button(shape_type type, std::wstring text)` | Создаёт кнопку с формой и текстом. | `Button btn(shape_type::circle, L"OK");` |
+| `Button(shape_type type, float x, float y)` | Создаёт кнопку с формой и позицией. | `Button btn(shape_type::rectangle, 100, 200);` |
+| `Button(shape_type type, std::wstring text, float x, float y)` | Создаёт кнопку с формой, текстом и позицией. | `Button btn(shape_type::circle, L"Start", 50, 50);` |
+| `Button(shape_type type, float x, float y, float width, float height)` | Создаёт кнопку с формой, позицией и размером. | `Button btn(shape_type::rectangle, 10, 10, 200, 50);` |
+| `Button(shape_type type, std::wstring text, float x, float y, float width, float height)` | Создаёт кнопку с формой, текстом, позицией и размером. | `Button btn(shape_type::rectangle, L"Click", 100, 100, 150, 40);` |
 | **Настройка вида** |||
 | `void size(float x, float y)` | Устанавливает размер (ширина, высота). Для круга `x` — диаметр. | `btn.size(100, 50);` |
 | `void size(float x)` | Устанавливает размер для круга (диаметр) или квадрата (сторона). | `btn.size(100);` |
@@ -18,6 +22,8 @@
 | `void text(std::wstring str)` | Устанавливает текст на кнопке. | `btn.text(L"OK");` |
 | `void text(sf::Color color)` | Устанавливает цвет текста. | `btn.text(sf::Color::White);` |
 | `void text(int size)` | Устанавливает размер шрифта. | `btn.text(24);` |
+| `void text(sf::Text::Style& style)` | Устанавливает стиль текста (жирный, курсив и т.д.). | `btn.text(sf::Text::Bold);` |
+| `void text(sf::Font& font)` | Устанавливает шрифт для текста. | `btn.text(myFont);` |
 | **Поведение и события** |||
 | `void push_mod(push_type type)` | Устанавливает режим нажатия (`oneclick` или `released`). | `btn.push_mod(push_type::oneclick);` |
 | `void callback(std::function<void()> func)` | Устанавливает функцию для однократного вызова при клике. | `btn.callback(myFunc);` |
@@ -27,8 +33,14 @@
 | `void cursor_position(sf::RenderWindow& window)` | Передаёт позицию курсора для обработки наведения. | `btn.cursor_position(window);` |
 | `void event(const std::optional<sf::Event>& event)` | Передаёт событие SFML в кнопку. | `btn.event(event);` |
 | **Геттеры** |||
-| `sf::Vector2f size()` | Возвращает размер кнопки. | `auto sz = btn.size();` |
+| `std::optional<sf::Text>& text()` | Возвращает ссылку на объект `sf::Text` для прямого доступа (если он есть). | `auto& txt = btn.text();` |
 | `sf::Color color()` | Возвращает текущий цвет кнопки. | `sf::Color c = btn.color();` |
+| `sf::Color hover_color()` | Возвращает цвет кнопки при наведении. | `sf::Color c = btn.hover_color();` |
+| `sf::Color border_color()` | Возвращает цвет границы. | `sf::Color c = btn.border_color();` |
+| `sf::Vector2f size()` | Возвращает размер кнопки. | `auto sz = btn.size();` |
+| `sf::Vector2f position()` | Возвращает позицию кнопки. | `auto pos = btn.position();` |
+| `sf::Vector2f button_origin()` | Возвращает точку отсчёта (origin) кнопки. | `auto origin = btn.button_origin();` |
+| `sf::Vector2f button_center()` | Возвращает координаты центра кнопки. | `auto center = btn.button_center();` |
 
 ## Полный список методов Label
 
