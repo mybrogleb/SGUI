@@ -74,11 +74,14 @@ int main()
 Label header(L"ЗАГОЛОВОК");
 
 header.text(32); //размер кегля
+header.text(sf::Color::White); //цвет текста
 header.background(SG_ON); //рисовать ярлык
 header.background(300, 0); //отступы, если нужны. Изначально 0
-
-header.position(400, 300);
+header.background(sf::Color::Black); //цвет фона
+header.position(400, 300); 
 ```
+
+> Почти все методы у всех классов перегружены, что упрощает понимание взаимодействия
 
 ## More Reading
 
