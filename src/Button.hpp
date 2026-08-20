@@ -1,11 +1,11 @@
-#pragma once
+﻿#pragma once
 #include "Widget.hpp"
+
 
 enum class border_type
 {
 	hover, fixed
 };
-
 enum class origin_type
 {
 	center, angle
@@ -14,10 +14,9 @@ enum class shape_type
 {
 	rectangle, circle
 };
-
 enum class push_type
 {
-	oneclick, released, pushing
+	oneclick, released
 };
 
 class Button : public Widget
@@ -26,15 +25,20 @@ private:
 	std::variant<sf::RectangleShape, sf::CircleShape> shape;
 	sf::RectangleShape rectangle;
 	sf::CircleShape circle;
+	std::optional<sf::Text> button_text;
 	sf::Vector2f cursor_pos;
 	sf::Color button_color;
 	sf::Color hover_button_color = sf::Color::Yellow;
 	std::function<void()> storage_callback;
 	push_type button_push_type;
 	border_type button_border_type;
+	origin_type origin_button_type;
+
 	bool hover = false;
+	bool is_hover_color_on = false;
 	float border_thick = 0;
-	
+	bool waspressed = false;
+
 	void initType(shape_type& type)
 	{
 		if (type == shape_type::circle) shape = circle;
@@ -62,6 +66,8 @@ private:
 	{
 		hover_state_update();
 
+		if (!is_hover_color_on) return;
+
 		if (hover)
 		{
 
@@ -87,33 +93,92 @@ private:
 			shape._Storage()._Get().setOutlineThickness(0);
 		}
 	}
+	bool exist()
+	{
+		if (auto s = std::get_if<sf::RectangleShape>(&shape))
+		{
+			return true;
+		}
+		else if (auto s = std::get_if<sf::CircleShape>(&shape))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	void text_update()
+	{
+		if (button_text.has_value())
+		{
+			if (origin_button_type == origin_type::center)
+			{
+				text_origin_update();
+				button_text->setPosition(position());
+			}
+
+			if (origin_button_type == origin_type::angle)
+			{
+				text_origin_update();
+				button_text->setPosition(button_center());
+			}
+		}
+		
+	}
+	void text_origin_update()
+	{
+		if (!button_text.has_value()) return;
+		sf::FloatRect rc = button_text->getLocalBounds();
+		button_text->setOrigin(sf::Vector2f(rc.position.x + (rc.size.x / 2), rc.position.y + (rc.size.y / 2)));
+	
+	}
+	void initText(std::wstring text)
+	{
 
 
-
-
-
-
+		button_text.emplace(ARIAL_TTF);
+		button_text->setString(text);
+		button_text->setFillColor(sf::Color::Magenta);
+		button_text->setLineAlignment(sf::Text::LineAlignment::Center);
+		text_origin_update();
+	}
 
 public:
 
-	void pushing_on(std::function<void()> call)
+	void when_pushing(std::function<void()> call)
 	{
 		storage_callback = call;
 
-		if (button_push_type == push_type::pushing && hover && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+		
+        
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && !hover)
 		{
-			if (storage_callback)
+			waspressed = true;
+		}
+		else if(!sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+		{
+			waspressed = false;
+		}
+
+		if (hover && waspressed == false)
+		{
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
 			{
-				storage_callback();
+				if (storage_callback)
+				{
+					storage_callback();
+				}
 			}
 		}
+
+		
 	}
 
 	void push_mod(push_type type)
 	{
 		if (type == push_type::oneclick) button_push_type = push_type::oneclick;
 		if (type == push_type::released) button_push_type = push_type::released;
-		if (type == push_type::pushing) button_push_type = push_type::pushing;
 	}
 	
 	void callback(std::function<void()> call)
@@ -134,9 +199,14 @@ public:
 
 	void draw(sf::RenderWindow& window) override
 	{
+		
 		std::visit([&](auto& shape)
 			{
-				window.draw(shape);
+			  if(exist()) window.draw(shape);
+			  if (button_text.has_value())
+			  {
+				  window.draw(*button_text);
+			  }
 			}, this->shape);
 
 	}
@@ -187,11 +257,13 @@ public:
 		
 	}
 
-	
+	//constructors:
 	Button(shape_type type)
 	{
 		initType(type);
 		initBaseValue();
+
+		origin_button_type = origin_type::angle;
 		button_color = BASE_BUTTON_COLOR;
 		if(type == shape_type::rectangle) shape._Storage()._Get().setSize(BASE_RECTANGLE_SIZE);
 		if (type == shape_type::circle)
@@ -201,7 +273,31 @@ public:
 			
 		}
 	}
+	Button(shape_type type, std::wstring text)
+	{
+		initType(type);
+		initBaseValue();
+		initText(text);
 
+		origin_button_type = origin_type::angle;
+		button_color = BASE_BUTTON_COLOR;
+
+		if (type == shape_type::rectangle)
+		{
+			shape._Storage()._Get().setSize(BASE_RECTANGLE_SIZE);
+		
+		}
+		if (type == shape_type::circle)
+		{
+			auto s = std::get_if<sf::CircleShape>(&shape);
+			s->setRadius(BASE_CIRCLE_RADIUS);
+
+		}
+
+		text_update();
+
+		
+	}
 
 	//setters:
 	void border(border_type type, float size, sf::Color color)
@@ -231,10 +327,17 @@ public:
 		{
 			s->setScale(scale);
 		}
+
+		text_update();
 	}
 	void position(float x, float y)
 	{
-		shape._Storage()._Get().setPosition(sf::Vector2f(x, y));
+		std::visit([&](auto& shape) {
+			shape.setPosition(sf::Vector2f(x, y));
+			}, this->shape);
+
+		text_update();
+		
 	}
 	void size(float x, float y)
 	{
@@ -246,6 +349,8 @@ public:
 		{
 			s->setRadius(x/2);
 		}
+
+		text_update();
 	}
 	void size(float x)
 	{
@@ -258,7 +363,7 @@ public:
 			s->setSize(sf::Vector2f(x,x));
 		}
 		
-		
+		text_update();
 	}
 	void origin(origin_type type)
 	{
@@ -268,10 +373,13 @@ public:
 			{
 				sf::FloatRect rc = s->getLocalBounds();
 				s->setOrigin(sf::Vector2f(rc.size.x / 2, rc.size.y / 2));
+
+			
 			}
 			else if (auto s = std::get_if<sf::CircleShape>(&shape))
 			{
 				s->setOrigin(sf::Vector2f(s->getRadius(), s->getRadius()));
+			
 			}
 		}
 		else
@@ -280,26 +388,71 @@ public:
 			if (auto s = std::get_if<sf::RectangleShape>(&shape))
 			{
 				s->setOrigin(sf::Vector2f(0, 0));
+				
 			}
 			else if (auto s = std::get_if<sf::CircleShape>(&shape))
 			{
 				s->setOrigin(sf::Vector2f(0, 0));
+				
 			}
 		}
+
+		text_update();
 	}
 	void color(sf::Color color)
 	{
-		shape._Storage()._Get().setFillColor(color);
+		std::visit([&](auto& shape) {
+			shape.setFillColor(color);
+			}, this->shape);
 		button_color = color;
 	}
 	void hover_color(sf::Color color)
 	{
 		hover_button_color = color;
+		is_hover_color_on = true;
+
 	}
+	void text(std::wstring str)
+	{
+		button_text->setString(str);
+		text_update();
+	}
+	void text(sf::Color clr)
+	{
+		button_text->setFillColor(clr);
+	}
+	void text(int x)
+	{
+		button_text->setCharacterSize(x);
+		text_update();
+	}
+	void text(sf::Text::Style& style)
+	{
+		button_text->setStyle(style);
+		text_update();
+	}
+	void text(sf::Font& f)
+	{
+		button_text->setFont(f);
+		text_update();
+	}
+
 	//getters:
-	sf::Color color()
+	std::optional<sf::Text>& text()
+	{
+		return button_text;
+	}
+	sf::Color& color()
 	{
 		return shape._Storage()._Get().getFillColor();
+	}
+	sf::Color& hover_color()
+	{
+		return hover_button_color;
+	}
+	sf::Color& border_color()
+	{
+		return shape._Storage()._Get().getOutlineColor();
 	}
 	sf::Vector2f size()
 	{
@@ -314,7 +467,46 @@ public:
 	}
 	sf::Vector2f& position()
 	{
-		return shape._Storage()._Get().getPosition();
-	}
 
+		if (auto s = std::get_if<sf::RectangleShape>(&shape))
+		{
+			return s->getPosition();
+		}
+		else if (auto s = std::get_if<sf::CircleShape>(&shape))
+		{
+			return s->getPosition();
+		}
+	}
+	sf::Vector2f& button_origin()
+	{
+
+		if (auto s = std::get_if<sf::RectangleShape>(&shape))
+		{
+
+			return s->getOrigin();
+		}
+		else if (auto s = std::get_if<sf::CircleShape>(&shape))
+		{
+			return s->getOrigin();
+		}
+
+
+	}
+	sf::Vector2f button_center()
+	{
+		if (auto s = std::get_if<sf::RectangleShape>(&shape))
+		{
+			if (origin_button_type == origin_type::angle)
+			{
+				sf::FloatRect r = s->getGlobalBounds();
+				return sf::Vector2f(r.position.x + r.size.x / 2, r.position.y + r.size.y / 2);
+			}
+
+		}
+		else if (auto s = std::get_if<sf::CircleShape>(&shape))
+		{
+			sf::FloatRect r = s->getGlobalBounds();
+			return sf::Vector2f(r.position.x + r.size.x / 2, r.position.y + r.size.y / 2);
+		}
+	}
 };

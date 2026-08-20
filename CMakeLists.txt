@@ -21,10 +21,16 @@ add_executable(SGUI
 	src/TextDisplay.hpp
 	src/Button.hpp
 	src/SGUI.hpp
+	
 )
 
 target_compile_definitions(SGUI PRIVATE SFML_STATIC)
 target_compile_features(SGUI PRIVATE cxx_std_17)
 target_link_libraries(SGUI PRIVATE SFML::Graphics SFML::Audio SFML::Window SFML::System)
+
+add_custom_command(TARGET SGUI POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_CURRENT_SOURCE_DIR}/assets
+    $<TARGET_FILE_DIR:SGUI>/assets)
 
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT SGUI)

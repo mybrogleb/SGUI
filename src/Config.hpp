@@ -7,8 +7,12 @@
 #include <any>
 #include <iostream>
 #include <functional>
+#include <filesystem>
+#include <string>
 
-const sf::Font BASE_FONT("arial.ttf");
+
+
+const sf::Font ARIAL_TTF("assets/fonts/arial.ttf");
 const float BASE_X_POS = 0;
 const float BASE_Y_POS = 0;
 const sf::Vector2f BASE_POS = { 0, 0 };

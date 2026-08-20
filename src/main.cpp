@@ -1,45 +1,60 @@
-#include "SGUI.hpp"
+﻿#include "SGUI.hpp"
 
-void click_on()
+
+
+bool test_foo2()
 {
-	std::cout << "mouse was clicked" << std::endl;
+	return true;
+}
+
+void test_foo()
+{
+	
+	if (test_foo2())
+	{
+		std::cout << "foo is work corretly";
+	}
+	
 }
 
 int main()
 {
-	sf::RenderWindow window( sf::VideoMode( { 1080, 720 } ), "SFML works!" );
+	sf::RenderWindow window( sf::VideoMode( { 900, 800 } ), "SFML works!" );
 	
 	std::vector<std::unique_ptr<Button>> button_list;
 
-
 	button_list.push_back(std::make_unique<Button>(shape_type::circle));
-	button_list.push_back(std::make_unique<Button>(shape_type::rectangle));
+	button_list.push_back(std::make_unique<Button>(shape_type::circle));
+	button_list.push_back(std::make_unique<Button>(shape_type::circle));
+
+	for (int i = 0, j = 1; i < 3; i++, j++)
+	{
+		button_list[i]->origin(origin_type::center);
+		button_list[i]->color(sf::Color::Blue);
+		button_list[i]->size(100);
+		button_list[i]->border(border_type::hover, 8, sf::Color::White);
+		button_list[i]->position(225 * j, 600);
+		button_list[i]->push_mod(push_type::oneclick);
+		button_list[i]->callback(test_foo);
+		
+	}
 	
-	button_list[0]->size(100);
-	button_list[1]->size(200);
 
-	button_list[0]->position(100, 100);
-	button_list[1]->position(400, 400);
+	button_list.push_back(std::make_unique<Button>(shape_type::rectangle, L"КНОПКА_3"));
 
-	button_list[0]->push_mod(push_type::oneclick);
-	button_list[1]->push_mod(push_type::pushing);
-
-	button_list[0]->callback(click_on);
-
+	button_list[3]->hover_color(sf::Color::Yellow);
+    button_list[3]->origin(origin_type::center);
+	button_list[3]->position(450, 100);
+	button_list[3]->size(200, 80);
 	
-	button_list[1]->origin(origin_type::center);
-	button_list[0]->origin(origin_type::center);
-
-	button_list[0]->color(sf::Color::Magenta);
-
-	button_list[1]->hover_color(sf::Color::Blue);
-
-	button_list[1]->border(border_type::hover, 6, sf::Color::Red);
-
-	sf::Color what_color = button_list[0]->color();
+	
+	button_list[3]->text(12);
+	button_list[3]->text(sf::Color::Red);
+	
 
 	while ( window.isOpen() )
-	{
+	{	
+		// give mouse_pos for buttons
 		for (auto& b : button_list)
 		{
 			b->cursor_position(window);
@@ -49,23 +64,38 @@ int main()
 		{
 			if ( event->is<sf::Event::Closed>() )window.close();
 			
+			// give event to buttons
 			for (auto& b : button_list)
 			{
 				b->event(event);
-			}
+			} 
 
 		}
 
-		button_list[1]->pushing_on(click_on);
-		
 
-	
-		button_list[1]->hover_effects();
 
+
+
+
+		// pushing mode
+		button_list[3]->when_pushing(test_foo);
+
+		//all hover effects on
+		for (auto& b : button_list)
+		{
+
+			b->hover_effects();
+		}
 
 		window.clear();
-		button_list[0]->draw(window);
-		button_list[1]->draw(window);
+	
+		// draw all
+		for (auto& b : button_list)
+		{
+			
+			b->draw(window);
+		}
+
 		window.display();
 	}
 }
