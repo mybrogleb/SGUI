@@ -9,7 +9,7 @@
 # ВОЗМОЖНОСТИ 20.08.2026
 ## Классы:
 - Widget (абстрактный класс)
-- Button (кнопка) [кнопка](https://github.com/mybrogleb/SGUI/blob/master/README.md#button-srcbuttonhpp)
+- Button [кнопка](https://github.com/mybrogleb/SGUI/blob/master/README.md#button-srcbuttonhpp)
 - Label (однострочный ярлык/текст)
   
 ### Button [src/Button.hpp](src/Button.hpp)
