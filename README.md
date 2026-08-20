@@ -70,6 +70,16 @@ int main()
 Класс однострочного текста с ярлыком(может отсутствовать)
 Автоматически выравнивает текст внутри ярлыка.
 
+```cpp
+Label header(L"ЗАГОЛОВОК");
+
+header.text(32); //размер кегля
+header.background(SG_ON); //рисовать ярлык
+header.background(300, 0); //отступы, если нужны. Изначально 0
+
+header.position(400, 300);
+```
+
 ## More Reading
 
 Here are some useful resources if you want to learn more about CMake:
