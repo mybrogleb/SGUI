@@ -50,9 +50,7 @@ int main()
   while(window.isOpen())
   {
     
-    	b.cursor_position(window); // передаем позицию курсора объекту
-    
-
+    b.cursor_position(window); // передаем позицию курсора объекту
     while ( const std::optional event = window.pollEvent() )
     {
     	if ( event->is<sf::Event::Closed>() )window.close();
