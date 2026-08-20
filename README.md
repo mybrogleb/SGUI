@@ -89,7 +89,7 @@ Label header(L"ЗАГОЛОВОК");
 
 header.text(32); //размер кегля
 header.text(sf::Color::White); //цвет текста
-header.background(SG_ON); //рисовать ярлык
+header.background(true); //рисовать ярлык
 header.background(300, 0); //отступы, если нужны. Изначально 0
 header.background(sf::Color::Black); //цвет фона
 header.position(400, 300); 
