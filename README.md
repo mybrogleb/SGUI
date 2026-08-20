@@ -91,7 +91,7 @@ header.background(300, 0); //отступы, если нужны. Изначал
 header.background(sf::Color::Black); //цвет фона
 header.position(400, 300); 
 ```
-
+[все методы](https://github.com/mybrogleb/SGUI/blob/master/API.md#%D0%BF%D0%BE%D0%BB%D0%BD%D1%8B%D0%B9-%D1%81%D0%BF%D0%B8%D1%81%D0%BE%D0%BA-%D0%BC%D0%B5%D1%82%D0%BE%D0%B4%D0%BE%D0%B2-label)
 > Почти все методы у всех классов перегружены, что упрощает понимание взаимодействия
 
 # БЫСТРЫЙ СТАРТ VISUAL STUDIO
