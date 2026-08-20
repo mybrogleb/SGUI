@@ -27,6 +27,45 @@
 - when_pushing(); <small>callback но постоянно вызывающийся</small>
 - hover_effects(); <small>отображения эффектов наводки</small>
 
+#### CALLBACK и WHEN_PUSH пояснение
+В кнопку с помощью `obj.callback()` можно передавать свою функцию.
+Для этого нужно заранее объявить функцию типа void. Она сама будет вызываться в Event.
+Функцию `obj.when_push()` необходимо использовать в основном цикле. Это необходимо для
+корректной работы кнопок.
+
+```cpp
+#include "SGUI.hpp"
+
+void foo()
+{ std::cout << "it's work!"; }
+
+int main()
+{
+  sf::RenderWindow window(sf::VideoMode({ 900, 800 }), "SFML works!");
+
+  Button b(shape_type::rectangle, L"КНОПКА");
+  b.callback(foo);  // передаем свою функцию в кнопку
+
+  while(window.isOpen())
+  {
+    
+    	b.cursor_position(window); // передаем позицию курсора объекту
+    
+
+    while ( const std::optional event = window.pollEvent() )
+    {
+    	if ( event->is<sf::Event::Closed>() )window.close();
+		    b.event(event); // здесь вызывается foo() при нажатии ЛКМ
+    }
+
+    b.when_push(foo); //будет вызывать foo() каждый кадр, когда нажата
+
+      //.. остальной код
+  }
+  
+}
+```
+
 ### Label
 Класс однострочного текста с ярлыком(может отсутствовать)
 Автоматически выравнивает текст внутри ярлыка.
