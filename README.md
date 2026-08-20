@@ -10,7 +10,7 @@
 ## Классы:
 - Widget (абстрактный класс)
 - Button [кнопка](https://github.com/mybrogleb/SGUI/blob/master/README.md#button-srcbuttonhpp)
-- Label (однострочный ярлык/текст)
+- Label  [ярлык](https://github.com/mybrogleb/SGUI/blob/master/README.md#label-srclabelhpp)
   
 ### Button [src/Button.hpp](src/Button.hpp)
 Класс кнопки. Создаёт объект имеющий форму(круг или прямуогольник), способный
