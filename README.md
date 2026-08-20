@@ -71,7 +71,7 @@ std::string t = "text";
 
 Button b(shape_type::circle);
 
-b.callback([&t]() { /*some code */}); // это удобнее, так как не нужно создавать список функций перед main
+b.callback([&t]() { std::cout << t; }); // это удобнее, так как не нужно создавать список функций перед main
 ```
 
 
