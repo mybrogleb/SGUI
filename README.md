@@ -7,7 +7,7 @@
 > Config.hpp содержит константы и загружает базовый шрифт
 
 # СОДЕРЖАНИЕ
-- Возможности
+- [Возможности](https://github.com/mybrogleb/SGUI/blob/master/README.md#%D0%B2%D0%BE%D0%B7%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE%D1%81%D1%82%D0%B8-20082026) 
 - Быстрый старт
 - Важно
 
