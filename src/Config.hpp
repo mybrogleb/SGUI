@@ -11,7 +11,8 @@
 #include <string>
 
 
-
+const bool SG_ON = true;
+const bool SG_OFF = false;
 const sf::Font ARIAL_TTF("assets/fonts/arial.ttf");
 const float BASE_X_POS = 0;
 const float BASE_Y_POS = 0;

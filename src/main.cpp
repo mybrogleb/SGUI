@@ -19,38 +19,31 @@ void test_foo()
 
 int main()
 {
-	sf::RenderWindow window( sf::VideoMode( { 900, 800 } ), "SFML works!" );
-	
+	sf::RenderWindow window(sf::VideoMode({ 900, 800 }), "SFML works!");
+
 	std::vector<std::unique_ptr<Button>> button_list;
-
-	button_list.push_back(std::make_unique<Button>(shape_type::circle));
-	button_list.push_back(std::make_unique<Button>(shape_type::circle));
-	button_list.push_back(std::make_unique<Button>(shape_type::circle));
-
-	for (int i = 0, j = 1; i < 3; i++, j++)
-	{
-		button_list[i]->origin(origin_type::center);
-		button_list[i]->color(sf::Color::Blue);
-		button_list[i]->size(100);
-		button_list[i]->border(border_type::hover, 8, sf::Color::White);
-		button_list[i]->position(225 * j, 600);
-		button_list[i]->push_mod(push_type::oneclick);
-		button_list[i]->callback(test_foo);
-		
-	}
-	
 
 	button_list.push_back(std::make_unique<Button>(shape_type::rectangle, L"КНОПКА_3"));
 
-	button_list[3]->hover_color(sf::Color::Yellow);
-    button_list[3]->origin(origin_type::center);
-	button_list[3]->position(450, 100);
-	button_list[3]->size(200, 80);
+	button_list[0]->hover_color(sf::Color::Yellow);
+	button_list[0]->origin(origin_type::center);
+	button_list[0]->position(450, 100);
+	button_list[0]->size(200, 80);
 	
 	
-	button_list[3]->text(12);
-	button_list[3]->text(sf::Color::Red);
+	button_list[0]->text(12);
+	button_list[0]->text(sf::Color::Red);
+
+	Label header(L"ЗАГОЛОВОК");
 	
+	header.text(32);
+	header.background(SG_ON);
+	header.background(300, 0);
+
+	header.position(400, 300);
+
+
+
 
 	while ( window.isOpen() )
 	{	
@@ -78,13 +71,13 @@ int main()
 
 
 		// pushing mode
-		button_list[3]->when_pushing(test_foo);
+		button_list[0]->when_pushing(test_foo);
 
 		//all hover effects on
 		for (auto& b : button_list)
 		{
 
-			b->hover_effects();
+			b->hover_effects(SG_ON);
 		}
 
 		window.clear();
@@ -95,6 +88,8 @@ int main()
 			
 			b->draw(window);
 		}
+
+		header.draw(window);
 
 		window.display();
 	}

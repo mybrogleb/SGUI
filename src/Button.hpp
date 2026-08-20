@@ -186,8 +186,9 @@ public:
 		storage_callback = call;
 	}
 
-	void hover_effects()
+	void hover_effects(bool b)
 	{
+		if (b == false) return;
 		hover_border_on();
 		hover_color_on();
 	}

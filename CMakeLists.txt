@@ -20,6 +20,7 @@ add_executable(SGUI
 	src/TextBuffer.hpp
 	src/TextDisplay.hpp
 	src/Button.hpp
+	src/Label.hpp
 	src/SGUI.hpp
 	
 )
