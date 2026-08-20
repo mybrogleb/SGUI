@@ -44,6 +44,7 @@ int main()
   sf::RenderWindow window(sf::VideoMode({ 900, 800 }), "SFML works!");
 
   Button b(shape_type::rectangle, L"КНОПКА");
+  b.push_mod(push_type::oneclick);
   b.callback(foo);  // передаем свою функцию в кнопку
 
   while(window.isOpen())
