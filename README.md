@@ -8,7 +8,7 @@
 
 # СОДЕРЖАНИЕ
 - [Возможности](https://github.com/mybrogleb/SGUI/blob/master/README.md#%D0%B2%D0%BE%D0%B7%D0%BC%D0%BE%D0%B6%D0%BD%D0%BE%D1%81%D1%82%D0%B8-20082026) 
-- Быстрый старт
+- [Быстрый старт](https://github.com/mybrogleb/SGUI/blob/master/README.md#%D0%B1%D1%8B%D1%81%D1%82%D1%80%D1%8B%D0%B9-%D1%81%D1%82%D0%B0%D1%80%D1%82-visual-studio)
 - Важно
 
 # ВОЗМОЖНОСТИ 20.08.2026
